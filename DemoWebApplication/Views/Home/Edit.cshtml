@@ -1,0 +1,24 @@
+@model DemoWebApplication.Models.questions
+
+@{
+    ViewData["Title"] = "Edit Question";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" class="form-control" id="question_id" name="question_id" value="@Model.question_id" required/>
+    <div class="form-group">
+        <label for="question_text">Question Text</label>
+        <input type="text" class="form-control" id="question_text" name="question_text" value="@Model.question_text" required />
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" name="category" value="@Model.category" required />
+    </div>
+    <div class="form-group">
+        <label for="difficulty_level">Difficulty Level</label>
+        <input type="text" class="form-control" id="difficulty_level" name="difficulty_level" value="@Model.difficulty_level" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+</form>

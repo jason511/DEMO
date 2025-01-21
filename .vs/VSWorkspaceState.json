@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.idea",
+    "\\.idea\\.idea.DemoWebApplication",
+    "\\.idea\\.idea.DemoWebApplication\\.idea",
+    "\\DemoWebApplication",
+    "\\DemoWebApplication\\obj"
+  ],
+  "SelectedNode": "\\DemoWebApplication\\obj\\Debug",
+  "PreviewInSolutionExplorer": false
+}
