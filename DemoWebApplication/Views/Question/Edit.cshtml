@@ -1,0 +1,32 @@
+@model DemoWebApplication.Models.questions
+
+@{
+    ViewData["Title"] = "Edit Question";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()  <!-- 防範 CSRF 攻擊 -->
+    <!-- 隱藏字段，用來提交問題 ID -->
+    @Html.HiddenFor(m => m.question_id)
+    <div class="form-group">
+        <label for="question_text">Question Text</label>
+        @Html.TextBoxFor(m => m.question_text, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.question_text, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="category">Category</label>
+        @Html.TextBoxFor(m => m.category, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.category, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="difficulty_level">Difficulty Level</label>
+        @Html.TextBoxFor(m => m.difficulty_level, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.difficulty_level, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+</form>

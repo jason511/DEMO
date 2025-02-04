@@ -4,7 +4,10 @@ using DemoWebApplication.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<test1Context>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 40)) // 設定您的 MySQL 版本
+    )
 );
 // Add services to the container.
 builder.Services.AddControllersWithViews();
