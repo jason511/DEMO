@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using DemoWebApplication.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,15 @@ builder.Services.AddDbContext<test1Context>(options =>
         new MySqlServerVersion(new Version(8, 0, 40)) // 設定您的 MySQL 版本
     )
 );
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        // 設定登入路徑，當用戶未登入時將被重定向到這裡
+        options.LoginPath = "/Login/Index";  
+        options.LogoutPath = "/Login/Logout"; // 登出路徑
+    });
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -27,6 +37,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

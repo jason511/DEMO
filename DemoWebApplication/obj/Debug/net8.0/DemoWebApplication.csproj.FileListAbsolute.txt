@@ -124,3 +124,4 @@ C:\Users\ASUS\RiderProjects\DemoWebApplication\DemoWebApplication\bin\Debug\net8
 C:\Users\ASUS\RiderProjects\DemoWebApplication\DemoWebApplication\obj\Debug\net8.0\DemoWebApplication.sourcelink.json
 C:\Users\ASUS\RiderProjects\DemoWebApplication\DemoWebApplication\bin\Debug\net8.0\MySqlConnector.dll
 C:\Users\ASUS\RiderProjects\DemoWebApplication\DemoWebApplication\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\ASUS\RiderProjects\DemoWebApplication\DemoWebApplication\bin\Debug\net8.0\BCrypt.Net-Next.dll
