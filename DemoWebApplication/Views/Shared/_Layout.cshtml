@@ -1,4 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@* @{ *@
+@*     if (!User.Identity.IsAuthenticated) *@
+@*     { *@
+@*         Context.Response.Redirect("/Login/Index"); *@
+@*     } *@
+@* } *@
+<script>
+    window.onbeforeunload = function () {
+        var url = '/Login/Logout'; // 登出的 URL
+
+        // 使用 navigator.sendBeacon 發送登出請求
+        navigator.sendBeacon(url);
+    };
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +43,25 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Question" asp-action="Questions">Questions</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <span class="navbar-text me-2">Hello, @User.Identity.Name!</span>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-controller="Login" asp-action="Logout" method="post">
+                                <button type="submit" class="btn btn-link nav-link text-dark">登出</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Login" asp-action="Index">登入</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
