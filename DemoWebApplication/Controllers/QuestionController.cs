@@ -2,8 +2,10 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DemoWebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DemoWebApplication.Controllers;
+[Authorize]
 public class QuestionController : Controller
     {
         private readonly test1Context _context;

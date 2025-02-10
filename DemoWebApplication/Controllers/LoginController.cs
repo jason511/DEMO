@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using System.Linq;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DemoWebApplication.Controllers;
-
+[AllowAnonymous]
 public class LoginController : Controller
 {
     private readonly test1Context _context;
@@ -18,14 +19,15 @@ public class LoginController : Controller
     }
 
     // 顯示登入頁面
-    public IActionResult Index()
+    public IActionResult Index(string? returnUrl = null) // ✅【修改】接收 returnUrl
     {
+        ViewBag.ReturnUrl = returnUrl;
         return View();
     }
 
     // 登入處理
     [HttpPost]
-    public IActionResult Index(LoginViewModel model)
+    public IActionResult Index(LoginViewModel model, string? returnUrl = null) // ✅【修改】接收 returnUrl
     {
         if (ModelState.IsValid)
         {
@@ -45,7 +47,11 @@ public class LoginController : Controller
 
                 // 設定登入時的 Cookie
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
+                // ✅【修改】登入成功後，導向 ReturnUrl，否則回首頁
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Index", "Home"); // 登入成功後跳轉到主頁
             }
             else
@@ -53,7 +59,7 @@ public class LoginController : Controller
                 ModelState.AddModelError("", "用戶名或密碼錯誤");
             }
         }
-
+        ViewBag.ReturnUrl = returnUrl; // ✅【新增】確保登入失敗時 returnUrl 仍然存在
         return View(model);
     }
 
@@ -71,6 +77,6 @@ public class LoginController : Controller
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
         // 登出後重定向到登入頁面
-        return RedirectToAction("Index", "Login");
+        return RedirectToAction("Index", "Home");
     }
 }
