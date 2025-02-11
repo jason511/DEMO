@@ -6,6 +6,10 @@
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 <form asp-action="Index" method="post">
+
+    <!-- ✅【新增】隱藏欄位來傳遞 ReturnUrl -->
+    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+    
     <div class="form-group">
         <label for="Username">用戶名或電子郵件</label>
         <input type="text" class="form-control" id="Username" name="Username" required />
