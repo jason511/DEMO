@@ -5,14 +5,14 @@
 @*         Context.Response.Redirect("/Login/Index"); *@
 @*     } *@
 @* } *@
-<script>
-    window.onbeforeunload = function () {
-        var url = '/Login/Logout'; // 登出的 URL
-
-        // 使用 navigator.sendBeacon 發送登出請求
-        navigator.sendBeacon(url);
-    };
-</script>
+@* <script> *@
+@*     window.onbeforeunload = function () { *@
+@*         var url = '/Login/Logout'; // 登出的 URL *@
+@* *@
+@*         // 使用 navigator.sendBeacon 發送登出請求 *@
+@*         navigator.sendBeacon(url); *@
+@*     }; *@
+@* </script> *@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +42,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Question" asp-action="Questions">Questions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Reply" asp-action="Index">Reply</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Survey" asp-action="Index">Survey</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">

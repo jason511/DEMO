@@ -1,0 +1,144 @@
+@{
+    ViewData["Title"] = "Question Page";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- 加載提示 -->
+<div id="loading-message">Loading questions...</div>
+
+<!-- 顯示問題卡片的容器 -->
+<div id="question-container"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const questionContainer = document.getElementById("question-container");
+        const loadingMessage = document.getElementById("loading-message");
+        let currentQuestionIndex = 0;
+        let questions = [];
+
+        // 從後端獲取問題列表
+        fetch('/Reply/GetQuestions')
+            .then(response => response.json())
+            .then(data => {
+                questions = data;
+                loadQuestion();
+            })
+            .catch(error => {
+                console.error("Error loading questions:", error);
+                loadingMessage.innerText = "Failed to load questions.";
+            })
+            .finally(() => {
+                loadingMessage.style.display = 'none';  // 載入完畢後隱藏加載提示
+            });
+
+        // 加載問題
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                const questionCard = document.createElement('div');
+                questionCard.classList.add('question-card');
+                questionCard.textContent = question.question_text;
+
+                questionContainer.innerHTML = '';  // 清空現有的問題
+                questionContainer.appendChild(questionCard);
+                addSwipeListener(questionCard, question.question_id, question.survey_id);  // 監聽滑動事件
+            }
+        }
+
+        // 監聽滑動事件
+        function addSwipeListener(card, questionId, surveyId) {
+            let isDragging = false;
+            let startX, endX;
+
+            card.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;  // 記錄開始位置
+                card.style.transition = 'none';  // 禁止動畫過渡，確保實時拖動
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const diffX = e.clientX - startX;
+                card.style.transform = `translateX(${diffX}px)`;  // 即時移動卡片位置
+            });
+
+            card.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const diffX = e.clientX - startX;
+                card.style.transition = 'transform 0.3s';  // 恢復動畫過渡
+
+                if (Math.abs(diffX) > 20) {  // 滑動距離大於20像素
+                    if (diffX > 0) {
+                        // 右滑 -> Yes
+                        submitAnswer('yes', questionId,surveyId);
+                    } else {
+                        // 左滑 -> No
+                        submitAnswer('no', questionId,surveyId);
+                    }
+                } else {
+                    card.style.transform = 'translateX(0)';  // 還原卡片位置
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    card.style.transition = 'transform 0.3s';  // 恢復動畫過渡
+                    card.style.transform = 'translateX(0)';  // 還原卡片位置
+                }
+            });
+        }
+
+        // 提交答案
+        function submitAnswer(answer, questionId,surveyId) {
+            fetch('/Reply/SubmitAnswer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answer: answer, questionId: questionId ,surveyId:surveyId})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    currentQuestionIndex++; // 更新當前問題索引
+                    if (currentQuestionIndex < questions.length) {
+                        loadQuestion();  // 加載下一個問題
+                    } else {
+                        // 問卷完成，導向結果頁面
+                        window.location.href = '/Survey/Detail?surveyId=' + surveyId;
+                    }
+                })
+                .catch(error => console.error('Error submitting answer:', error));
+        }
+    });
+</script>
+
+<style>
+    /* 問題卡片樣式 */
+    .question-card {
+        display: flex;  /* 使用 Flexbox 來對齊內容 */
+        align-items: center;  /* 垂直居中 */
+        justify-content: center;  /* 水平居中 */
+        padding: 20px;
+        border: 2px solid #007bff;
+        margin: 10px;
+        border-radius: 8px;
+        font-size: 18px;
+        text-align: center;
+        background-color: #f0f8ff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        user-select: none; /* 禁用選取文本 */
+        -webkit-user-drag: none; /* 禁用拖動 */
+        width: 300px; /* 設定固定寬度 */
+        height: 300px; /* 設定固定高度，讓內容能夠垂直置中 */
+        margin: auto;  /* 居中顯示 */
+    }
+
+    /* 加載提示樣式 */
+    #loading-message {
+        text-align: center;
+        font-size: 18px;
+        color: #007bff;
+    }
+</style>

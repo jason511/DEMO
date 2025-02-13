@@ -1,0 +1,33 @@
+@model List<UserSurveyModel>
+
+<h1>我的問卷回答</h1>
+
+@if (Model.Count == 0)
+{
+    <p>您尚未完成任何問卷。</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>問卷編號</th>
+            <th>回答時間</th>
+            <th>問卷明細</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var (survey, index) in Model.OrderBy(s => s.AnsweredAt).Select((survey, index) => (survey, index + 1)))
+        {
+            <tr>
+                <!-- 顯示問卷編號 -->
+                <td>問卷 @index</td>
+                <td>@survey.AnsweredAt?.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a href="@Url.Action("Detail", "Survey", new { surveyId = survey.SurveyId })" class="btn btn-info">查看詳情</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

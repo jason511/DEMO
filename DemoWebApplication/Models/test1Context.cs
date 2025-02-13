@@ -28,12 +28,19 @@ public partial class test1Context : DbContext
             entity.HasIndex(e => e.question_id, "question_id");
 
             entity.HasIndex(e => e.user_id, "user_id");
+            
+            entity.HasIndex(e => e.survey_id, "survey_id");  // 新增 survey_id 索引
 
             entity.Property(e => e.answer).HasMaxLength(255);
             entity.Property(e => e.answered_at)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp");
 
+            // 設定 survey_id 的關聯
+            entity.Property(e => e.survey_id)  // 新增 survey_id
+                .HasMaxLength(255)
+                .IsRequired();
+            
             entity.HasOne(d => d.question).WithMany(p => p.answers)
                 .HasForeignKey(d => d.question_id)
                 .HasConstraintName("answers_ibfk_2");

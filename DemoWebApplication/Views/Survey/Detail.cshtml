@@ -1,0 +1,33 @@
+@model UserSurveyModel
+<h1>問卷回答</h1>
+@if (Model == null || Model.QuestionAnswers.Count == 0)
+{
+    <p>該問卷尚未填寫或找不到詳細資料。</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>問題編號</th>
+            <th>問題內容</th>
+            <th>回答</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var (qa, index) in Model.QuestionAnswers.Select((qa, index) => (qa, index + 1)))
+        {
+            <tr>
+                <td>@index</td> <!-- 顯示問題順序 -->
+                <td>@qa.QuestionText</td> <!-- 顯示問題內容 -->
+                <td>@qa.Answer</td> <!-- 顯示回答 -->
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<!-- 返回上一頁的按鈕 -->
+<div class="text-center mt-3">
+    <a href="@Url.Action("Index", "Survey")" class="btn btn-primary">返回我的問卷</a>
+</div>

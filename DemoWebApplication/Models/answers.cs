@@ -16,6 +16,8 @@ public partial class answers
     public int? score { get; set; }
 
     public DateTime? answered_at { get; set; }
+    
+    public Guid survey_id { get; set; }
 
     public virtual questions? question { get; set; }
 

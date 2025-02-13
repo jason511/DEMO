@@ -38,6 +38,7 @@ public class LoginController : Controller
                 // 登入成功，設定認證 Cookie
                 var claims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString()), // 🔹 加入 UserId
                     new Claim(ClaimTypes.Name, user.username),
                     new Claim(ClaimTypes.Email, user.email)
                 };
