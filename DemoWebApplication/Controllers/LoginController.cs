@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using DemoWebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using System.Linq;
+using System.Threading.Tasks;
 using BCrypt.Net;
 using Microsoft.AspNetCore.Authorization;
 
