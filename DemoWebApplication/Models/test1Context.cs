@@ -41,10 +41,6 @@ public partial class test1Context : DbContext
                 .HasMaxLength(255)
                 .IsRequired();
             
-            entity.HasOne(d => d.question).WithMany(p => p.answers)
-                .HasForeignKey(d => d.question_id)
-                .HasConstraintName("answers_ibfk_2");
-
             entity.HasOne(d => d.user).WithMany(p => p.answers)
                 .HasForeignKey(d => d.user_id)
                 .HasConstraintName("answers_ibfk_1");

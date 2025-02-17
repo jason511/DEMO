@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DemoWebApplication.Models;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 namespace DemoWebApplication.Controllers;
 [Authorize]
 public class ReplyController : Controller
@@ -45,15 +45,15 @@ public class ReplyController : Controller
         try
         {
             // 🔍 Debug 檢查所有的 Claims
-            var allClaims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+            // var allClaims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
             // 🔹 取得目前登入的使用者 ID
-            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
             if (userIdClaim == null)
             {
                 return Json(new { success = false, message = "User not authenticated" });
             }
-
+            
             int userId = int.Parse(userIdClaim.Value); // 將 UserId 轉為整數
             var answer = new answers
             {
@@ -63,7 +63,7 @@ public class ReplyController : Controller
                 survey_id = model.SurveyId, // 確保這裡使用正確的 SurveyId
                 answered_at = DateTime.Now,
             };
-
+            
             _context.answers.Add(answer);
             _context.SaveChanges();
 

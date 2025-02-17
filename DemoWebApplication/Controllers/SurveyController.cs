@@ -29,17 +29,17 @@ namespace DemoWebApplication.Controllers
             // 查詢用戶所回答的所有問卷，並按回答時間排序，顯示問卷編號
             var surveys = _context.answers
                 .Where(a => a.user_id == userId)
-                .GroupBy(a => a.survey_id)
+                .Join(_context.questions, a => a.question_id, q => q.question_id, (a, q) => new { a, q }) // 使用 JOIN 來查詢問題
+                .GroupBy(x => x.a.survey_id)
                 .Select(g => new UserSurveyModel
                 {
                     SurveyId = g.Key,
-                    SurveyTitle = "Survey " + g.Key,  // 這個可以隱藏，並改為顯示順序
-                    AnsweredAt = g.Min(a => a.answered_at), // 取得最早的回答時間
-                    QuestionAnswers = g.Select(a => new QuestionAnswerModel
+                    AnsweredAt = g.Min(x => x.a.answered_at), // 取得最早的回答時間
+                    QuestionAnswers = g.Select(x => new QuestionAnswerModel
                     {
-                        QuestionText = a.question.question_text,
-                        Answer = a.answer,
-                        AnsweredAt = a.answered_at
+                        QuestionText = x.q.question_text, // 直接從 questions 表查詢問題文字
+                        Answer = x.a.answer,
+                        AnsweredAt = x.a.answered_at
                     }).ToList()
                 })
                 .OrderBy(s => s.AnsweredAt)  // 按照回答時間排序，最早的顯示在最前
@@ -63,17 +63,17 @@ namespace DemoWebApplication.Controllers
             // 查詢指定問卷的詳細資料
             var survey = _context.answers
                 .Where(a => a.survey_id == surveyId && a.user_id == userId)
-                .GroupBy(a => a.survey_id)
+                .Join(_context.questions, a => a.question_id, q => q.question_id, (a, q) => new { a, q }) // 使用 JOIN 來查詢問題
+                .GroupBy(x => x.a.survey_id)
                 .Select(g => new UserSurveyModel
                 {
                     SurveyId = g.Key,
-                    SurveyTitle = "Survey " + g.Key,  // 這個可以隱藏，並改為顯示順序
-                    AnsweredAt = g.Min(a => a.answered_at),  // 取得最早的回答時間
-                    QuestionAnswers = g.Select(a => new QuestionAnswerModel
+                    AnsweredAt = g.Min(x => x.a.answered_at),  // 取得最早的回答時間
+                    QuestionAnswers = g.Select(x => new QuestionAnswerModel
                     {
-                        QuestionText = a.question.question_text,
-                        Answer = a.answer,
-                        AnsweredAt = a.answered_at
+                        QuestionText = x.q.question_text, // 直接從 questions 表查詢問題文字
+                        Answer = x.a.answer,
+                        AnsweredAt = x.a.answered_at
                     }).ToList()
                 })
                 .FirstOrDefault();

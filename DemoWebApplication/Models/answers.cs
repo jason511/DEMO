@@ -18,8 +18,6 @@ public partial class answers
     public DateTime? answered_at { get; set; }
     
     public Guid survey_id { get; set; }
-
-    public virtual questions? question { get; set; }
-
+    
     public virtual users? user { get; set; }
 }

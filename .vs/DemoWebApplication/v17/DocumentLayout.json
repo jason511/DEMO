@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\RiderProjects\\DemoWebApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{089524E4-24D3-499C-95EC-6398EC1A0978}|DemoWebApplication\\DemoWebApplication.csproj|c:\\users\\asus\\riderprojects\\demowebapplication\\demowebapplication\\migrations\\test1contextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{089524E4-24D3-499C-95EC-6398EC1A0978}|DemoWebApplication\\DemoWebApplication.csproj|solutionrelative:demowebapplication\\migrations\\test1contextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{089524E4-24D3-499C-95EC-6398EC1A0978}|DemoWebApplication\\DemoWebApplication.csproj|c:\\users\\asus\\riderprojects\\demowebapplication\\demowebapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{089524E4-24D3-499C-95EC-6398EC1A0978}|DemoWebApplication\\DemoWebApplication.csproj|solutionrelative:demowebapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -19,15 +23,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "test1ContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\RiderProjects\\DemoWebApplication\\DemoWebApplication\\Migrations\\test1ContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "DemoWebApplication\\Migrations\\test1ContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\ASUS\\RiderProjects\\DemoWebApplication\\DemoWebApplication\\Migrations\\test1ContextModelSnapshot.cs",
+              "RelativeToolTip": "DemoWebApplication\\Migrations\\test1ContextModelSnapshot.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAQwLMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T03:43:54.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\RiderProjects\\DemoWebApplication\\DemoWebApplication\\Program.cs",
               "RelativeDocumentMoniker": "DemoWebApplication\\Program.cs",
               "ToolTip": "C:\\Users\\ASUS\\RiderProjects\\DemoWebApplication\\DemoWebApplication\\Program.cs",
               "RelativeToolTip": "DemoWebApplication\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAACgAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-20T05:50:33.487Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
