@@ -1,0 +1,25 @@
+# Rider 設定檔
+.idea/
+*.iml
+workspace.xml
+
+# .NET / C# 相關
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+
+# VS Code / Rider 相關
+.vscode/
+.vs/
+
+# npm / Node.js
+node_modules/
+package-lock.json
+
+# 其他暫存檔
+*.log
+*.tmp
+*.bak
