@@ -18,8 +18,5 @@ public partial class questions
     public DateTime? created_at { get; set; }
 
     public DateTime? updated_at { get; set; }
-
-    public virtual ICollection<answers> answers { get; set; } = new List<answers>();
-
-    public virtual users? created_byNavigation { get; set; }
+    
 }

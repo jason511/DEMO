@@ -19,5 +19,4 @@ public partial class answers
     
     public Guid survey_id { get; set; }
     
-    public virtual users? user { get; set; }
 }

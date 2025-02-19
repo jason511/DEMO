@@ -14,6 +14,4 @@ public partial class evaluations
     public string? recommendation { get; set; }
 
     public DateTime? evaluated_at { get; set; }
-
-    public virtual users? user { get; set; }
 }

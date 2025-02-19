@@ -40,10 +40,6 @@ public partial class test1Context : DbContext
             entity.Property(e => e.survey_id)  // 新增 survey_id
                 .HasMaxLength(255)
                 .IsRequired();
-            
-            entity.HasOne(d => d.user).WithMany(p => p.answers)
-                .HasForeignKey(d => d.user_id)
-                .HasConstraintName("answers_ibfk_1");
         });
 
         modelBuilder.Entity<evaluations>(entity =>
@@ -56,10 +52,6 @@ public partial class test1Context : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp");
             entity.Property(e => e.recommendation).HasMaxLength(255);
-
-            entity.HasOne(d => d.user).WithMany(p => p.evaluations)
-                .HasForeignKey(d => d.user_id)
-                .HasConstraintName("evaluations_ibfk_1");
         });
 
         modelBuilder.Entity<questions>(entity =>
@@ -80,10 +72,6 @@ public partial class test1Context : DbContext
                 .ValueGeneratedOnAddOrUpdate()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp");
-
-            entity.HasOne(d => d.created_byNavigation).WithMany(p => p.questions)
-                .HasForeignKey(d => d.created_by)
-                .HasConstraintName("questions_ibfk_1");
         });
 
         modelBuilder.Entity<users>(entity =>

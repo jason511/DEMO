@@ -16,6 +16,7 @@
         const loadingMessage = document.getElementById("loading-message");
         let currentQuestionIndex = 0;
         let questions = [];
+        let answers = [];
 
         // 從後端獲取問題列表
         fetch('/Reply/GetQuestions')
@@ -26,7 +27,7 @@
             })
             .catch(error => {
                 console.error("Error loading questions:", error);
-                loadingMessage.innerText = "Failed to load questions.";
+                loadingMessage.innerText = "讀取問題中";
             })
             .finally(() => {
                 loadingMessage.style.display = 'none';  // 載入完畢後隱藏加載提示
@@ -72,10 +73,10 @@
                 if (Math.abs(diffX) > 20) {  // 滑動距離大於20像素
                     if (diffX > 0) {
                         // 右滑 -> Yes
-                        submitAnswer('yes', questionId,surveyId);
+                        saveAnswer('yes', questionId,surveyId);
                     } else {
                         // 左滑 -> No
-                        submitAnswer('no', questionId,surveyId);
+                        saveAnswer('no', questionId,surveyId);
                     }
                 } else {
                     card.style.transform = 'translateX(0)';  // 還原卡片位置
@@ -90,23 +91,29 @@
                 }
             });
         }
+        // 儲存回答至陣列（不立即提交）
+        function saveAnswer(answer, questionId, surveyId) {
+            answers.push({ answer, questionId, surveyId });
 
+            currentQuestionIndex++; // 更新問題索引
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();  // 繼續顯示下一個問題
+            } else {
+                // 所有問題回答完畢，提交所有回答
+                submitAnswers();
+            }
+        }
         // 提交答案
-        function submitAnswer(answer, questionId,surveyId) {
-            fetch('/Reply/SubmitAnswer', {
+        function submitAnswers() {
+            fetch('/Reply/SubmitAnswers', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ answer: answer, questionId: questionId ,surveyId:surveyId})
+                body: JSON.stringify({ answers: answers})
             })
                 .then(response => response.json())
                 .then(data => {
-                    currentQuestionIndex++; // 更新當前問題索引
-                    if (currentQuestionIndex < questions.length) {
-                        loadQuestion();  // 加載下一個問題
-                    } else {
                         // 問卷完成，導向結果頁面
-                        window.location.href = 123//'/Survey/Detail?surveyId=' + surveyId;
-                    }
+                        window.location.href = '/Survey/Detail?surveyId=' + answers[0].surveyId;
                 })
                 .catch(error => console.error('Error submitting answer:', error));
         }

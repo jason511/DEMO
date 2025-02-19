@@ -24,7 +24,12 @@
 
     <div class="form-group">
         <label for="difficulty_level">重要程度</label>
-        @Html.TextBoxFor(m => m.difficulty_level, new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.difficulty_level, new List<SelectListItem>
+        {
+            new SelectListItem { Text = "High", Value = "High" },
+            new SelectListItem { Text = "Medium", Value = "Medium" },
+            new SelectListItem { Text = "Low", Value = "Low" }
+        }, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.difficulty_level, "", new { @class = "text-danger" })
     </div>
 
